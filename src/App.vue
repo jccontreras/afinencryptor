@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container-fliud">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/analyzer">Analyzer</router-link> |
       <router-link to="/encryptor">Encryptor</router-link>
     </div>
     <router-view/>
