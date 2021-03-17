@@ -135,10 +135,12 @@ export default {
         const aux = this.encryp.text.charAt(j);
         this.alphabetlist.forEach((item) => {
           if (aux === item.letter) {
-            // eslint-disable-next-line no-mixed-operators
-            const c = this.encryp.a * item.value + this.encryp.b % constants.n;
+            let res = Number(this.encryp.a) * Number(item.value);
+            res += Number(this.encryp.b);
+            res = Number(this.exactMod(res, constants.n));
+            alert(this.findFinalLetter(res));
             // eslint-disable-next-line operator-assignment
-            this.encryp.result = this.encryp.result + this.findFinalLetter(c);
+            this.encryp.result = this.encryp.result + this.findFinalLetter(Number(res));
             // alert(c);
           }
         });
