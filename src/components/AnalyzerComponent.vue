@@ -1,63 +1,109 @@
 <template>
   <div class="container-fluid">
-    <div class="card">
-      <form @submit.prevent="analyzeText">
-        <div class="card-body">
-          <h5 class="card-title">Welcome to Encryptor Afin</h5>
-          <h6 class="card-subtitle mb-2 text-muted">please enter the text you want to analyze</h6>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Text to Analyze</span>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <form @submit.prevent="analyzeText">
+            <div class="card-body">
+              <h5 class="card-title">Welcome to Encryptor Afin</h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                please enter the text you want to analyze</h6>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Text to Analyze</span>
+                </div>
+                <textarea class="form-control" aria-label="Text" v-model="analyze.text"
+                          placeholder="Text to Analyze" required/>
+              </div>
             </div>
-            <textarea class="form-control" aria-label="Text" v-model="analyze.text"
-                      placeholder="text to analyzet or decrypt" required/>
+            <div class="card-footer" style="border-top-style: none">
+              <div class="row">
+                <div class="col-11">
+                  <button type="submit" class="btn btn btn-dark">Analyze
+                  </button>
+                </div>
+                <div class="col-1">
+                  <a @click="reloadForm">
+                    <img src="@/assets/reload.png" style="max-width: 30px; max-height: 30px">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div v-if="showresult" class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">First letter</span>
+                    </div>
+                    <input class="form-control" aria-label="Text" v-model="analyze.first"
+                           placeholder="First letter" readonly/>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Second letter</span>
+                    </div>
+                    <input class="form-control" aria-label="Text" v-model="analyze.second"
+                           placeholder="Second letter" readonly/>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="card-footer" style="border-top-style: none">
-          <div class="row">
-            <div class="col-11">
-              <button type="submit" class="btn btn btn-dark">Analyze
-              </button>
-            </div>
-            <div class="col-1">
-              <a @click="reloadForm">
-                <img src="@/assets/reload.png" style="max-width: 30px; max-height: 30px">
-              </a>
-            </div>
-          </div>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'AnalyzerComponent',
   data() {
     return {
       analyze: {},
       showresult: false,
+      alphabetlist: [],
     };
   },
   methods: {
     analyzeText() {
       this.fixText();
+      this.countLetters();
     },
     countLetters() {
+      let first = 0;
+      let second = 0;
       // eslint-disable-next-line no-plusplus
       for (let j = 0; j < this.analyze.text.length; j++) {
         const letter = this.analyze.text[j];
-        const aux = [];
-        this.analyze.text = this.analyze.text.split('');
-
-        // eslint-disable-next-line array-callback-return
-        this.analyze.text.map((n) => {
-          if (n === letter) {
-            aux.push(n);
+        const indices = [];
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < this.analyze.text.length; i++) {
+          if (this.analyze.text[i] === letter) {
+            indices.push(this.analyze.text[i]);
           }
-        });
+        }
+        if (indices.length > first) {
+          this.analyze.first = letter;
+          first = indices.length;
+        } else if (indices.length > second) {
+          this.analyze.second = letter;
+          second = indices.length;
+        }
       }
+      this.showresult = true;
     },
     fixText() {
       let textnospace = this.analyze.text.replace(/ /g, '');
