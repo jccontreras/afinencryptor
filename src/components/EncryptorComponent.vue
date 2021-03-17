@@ -68,13 +68,14 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div v-if="showresult" class="row">
       <div class="col">
         <div class="card">
           <div class="card-body">
             <div class="input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text">Text</span>
+                <span v-if="todo" class="input-group-text">Encrypted Text</span>
+                <span v-else class="input-group-text">Decrypted Text</span>
               </div>
               <textarea class="form-control" aria-label="Text" v-model="encryp.result"
                         placeholder="text to encrypt or decrypt" readonly/>
@@ -97,26 +98,93 @@ export default {
       todo: null,
       alphabet: {},
       alphabetlist: [],
+      showresult: false,
     };
   },
   methods: {
     runAfin() {
       this.fixText();
       if (!this.todo) {
-        this.decrypt();
+        this.decryptText();
+      } else {
+        this.encryptText();
       }
+      this.showresult = true;
     },
-    decrypt() {
+    decryptText() {
+      const inv = this.invMod(this.encryp.a, constants.n);
+      alert(inv);
       // eslint-disable-next-line no-plusplus
       for (let j = 0; j < this.encryp.text.length; j++) {
-        const c = this.encryp.text.charAt(j);
+        const aux = this.encryp.text.charAt(j);
         this.alphabetlist.forEach((item) => {
-          if (c === item.letter) {
+          if (aux === item.letter) {
+            // eslint-disable-next-line no-mixed-operators
+            const c = (item.value - this.encryp.b) * inv % constants.n;
+            // alert(this.findFinalLetter(c));
             // eslint-disable-next-line operator-assignment
-            this.encryp.result = this.encryp.result + item.letter;
+            this.encryp.result = this.encryp.result + this.findFinalLetter(c);
           }
         });
       }
+    },
+    encryptText() {
+      // eslint-disable-next-line no-plusplus
+      for (let j = 0; j < this.encryp.text.length; j++) {
+        const aux = this.encryp.text.charAt(j);
+        this.alphabetlist.forEach((item) => {
+          if (aux === item.letter) {
+            // eslint-disable-next-line no-mixed-operators
+            const c = this.encryp.a * item.value + this.encryp.b % constants.n;
+            // eslint-disable-next-line operator-assignment
+            this.encryp.result = this.encryp.result + this.findFinalLetter(c);
+            // alert(c);
+          }
+        });
+      }
+    },
+    findFinalLetter(c) {
+      // eslint-disable-next-line consistent-return
+      this.alphabetlist.forEach((item) => {
+        if (c === item.value) {
+          return item.letter;
+        }
+      });
+    },
+    invMod(a, m) {
+      // eslint-disable-next-line no-param-reassign
+      [a, m] = [Number(a), Number(m)];
+      if (Number.isNaN(a) || Number.isNaN(m)) {
+        return NaN; // invalid input
+      }
+      // eslint-disable-next-line no-mixed-operators,no-param-reassign
+      a = (a % m + m) % m;
+      if (!a || m < 2) {
+        return NaN; // invalid input
+      }
+      // find the gcd
+      const s = [];
+      let b = m;
+      while (b) {
+        // eslint-disable-next-line no-param-reassign
+        [a, b] = [b, a % b];
+        s.push({
+          a,
+          b,
+        });
+      }
+      if (a !== 1) {
+        return 'NaN'; // inverse does not exists
+      }
+      // find the inverse
+      let x = 1;
+      let y = 0;
+      // eslint-disable-next-line no-plusplus
+      for (let i = s.length - 2; i >= 0; --i) {
+        [x, y] = [y, x - y * Math.floor(s[i].a / s[i].b)];
+      }
+      // eslint-disable-next-line no-mixed-operators
+      return (y % m + m) % m;
     },
     loadToDo(aux) {
       this.todo = aux;
@@ -124,6 +192,7 @@ export default {
     reloadForm() {
       this.encryp = {};
       this.encryp.result = '';
+      this.showresult = false;
     },
     fixText() {
       let textnospace = this.encryp.text.replace(/ /g, '');
@@ -155,6 +224,8 @@ export default {
       textnospace = this.encryp.text.replace(/\//g, '');
       this.encryp.text = textnospace;
       textnospace = this.encryp.text.replace(/_/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/\n/g, '');
       this.encryp.text = textnospace;
       this.encryp.text = this.encryp.text.toUpperCase();
     },
