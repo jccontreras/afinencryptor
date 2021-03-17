@@ -2,7 +2,7 @@
   <div class="card">
     <form @submit.prevent="runAfin">
       <div class="card-body">
-        <h5 class="card-title">Afin Ecrypter</h5>
+        <h5 class="card-title">Encryptor Afin</h5>
         <h6 class="card-subtitle mb-2 text-muted">please enter the following data</h6>
         <h6 class="card-subtitle mb-2 text-muted">remember that the variable 'n' is equal to 27</h6>
         <div class="container">
@@ -105,6 +105,12 @@ export default {
       textnospace = this.encryp.text.replace(/!/g, '');
       this.encryp.text = textnospace;
       textnospace = this.encryp.text.replace(/¡/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/-/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/\//g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/_/g, '');
       this.encryp.text = textnospace;
     },
   },
