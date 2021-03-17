@@ -113,12 +113,12 @@ export default {
       let second = 0;
       // eslint-disable-next-line no-plusplus
       for (let j = 0; j < finaltext.length; j++) {
-        const letter = this.analyze.text[j];
+        const letter = finaltext[j];
         const indices = [];
         // eslint-disable-next-line no-plusplus
         for (let i = 0; i < finaltext.length; i++) {
-          if (this.analyze.text[i] === letter) {
-            indices.push(this.analyze.text[i]);
+          if (finaltext[i] === letter) {
+            indices.push(finaltext[i]);
           }
         }
         if (indices.length > second) {
