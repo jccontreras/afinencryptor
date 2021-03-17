@@ -113,17 +113,18 @@ export default {
     },
     decryptText() {
       const inv = this.invMod(this.encryp.a, constants.n);
-      alert(inv);
       // eslint-disable-next-line no-plusplus
       for (let j = 0; j < this.encryp.text.length; j++) {
         const aux = this.encryp.text.charAt(j);
         this.alphabetlist.forEach((item) => {
           if (aux === item.letter) {
-            // eslint-disable-next-line no-mixed-operators
-            const c = (item.value - this.encryp.b) * inv % constants.n;
-            // alert(this.findFinalLetter(c));
+            let res = Number(item.value) - Number(this.encryp.b);
+            res *= inv;
+            res = this.exactMod(res, constants.n);
             // eslint-disable-next-line operator-assignment
-            this.encryp.result = this.encryp.result + this.findFinalLetter(c);
+            alert(this.findFinalLetter(res));
+            // eslint-disable-next-line operator-assignment
+            this.encryp.result = this.encryp.result + this.findFinalLetter(res);
           }
         });
       }
@@ -143,13 +144,17 @@ export default {
         });
       }
     },
-    findFinalLetter(c) {
+    findFinalLetter(l) {
       // eslint-disable-next-line consistent-return
       this.alphabetlist.forEach((item) => {
-        if (c === item.value) {
+        if (l === Number(item.value)) {
           return item.letter;
         }
       });
+    },
+    exactMod(a, m) {
+      const remain = a % m;
+      return Math.floor(remain >= 0 ? remain : remain + m);
     },
     invMod(a, m) {
       // eslint-disable-next-line no-param-reassign
