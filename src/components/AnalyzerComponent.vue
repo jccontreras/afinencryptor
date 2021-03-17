@@ -39,7 +39,7 @@
           <div class="card-body">
             <div class="container">
               <div class="row">
-                <div class="col">
+                <div class="col-6">
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text">First letter</span>
@@ -48,12 +48,32 @@
                            placeholder="First letter" readonly/>
                   </div>
                 </div>
-                <div class="col">
+                <div class="col-6">
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text">Second letter</span>
                     </div>
                     <input class="form-control" aria-label="Text" v-model="analyze.second"
+                           placeholder="Second letter" readonly/>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Third letter</span>
+                    </div>
+                    <input class="form-control" aria-label="Text" v-model="analyze.third"
+                           placeholder="First letter" readonly/>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Fourth letter</span>
+                    </div>
+                    <input class="form-control" aria-label="Text" v-model="analyze.fourth"
                            placeholder="Second letter" readonly/>
                   </div>
                 </div>
@@ -81,6 +101,7 @@ export default {
     analyzeText() {
       this.fixText();
       this.countLetters();
+      this.showresult = true;
     },
     countLetters() {
       let first = 0;
@@ -100,7 +121,6 @@ export default {
         }
       }
       this.secondLetter(this.analyze.text, this.analyze.first);
-      this.showresult = true;
     },
     secondLetter(text, aux) {
       let finaltext = '';
@@ -123,6 +143,56 @@ export default {
         if (indices.length > second) {
           this.analyze.second = letter;
           second = indices.length;
+        }
+      }
+      this.thirdLetter(finaltext, this.analyze.second);
+    },
+    thirdLetter(text, aux) {
+      let finaltext = '';
+      let textaux = [];
+      textaux = text.split(aux);
+      textaux.forEach((item) => {
+        finaltext += item;
+      });
+      let third = 0;
+      // eslint-disable-next-line no-plusplus
+      for (let j = 0; j < finaltext.length; j++) {
+        const letter = finaltext[j];
+        const indices = [];
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < finaltext.length; i++) {
+          if (finaltext[i] === letter) {
+            indices.push(finaltext[i]);
+          }
+        }
+        if (indices.length > third) {
+          this.analyze.third = letter;
+          third = indices.length;
+        }
+      }
+      this.fourthLetter(finaltext, this.analyze.third);
+    },
+    fourthLetter(text, aux) {
+      let finaltext = '';
+      let textaux = [];
+      textaux = text.split(aux);
+      textaux.forEach((item) => {
+        finaltext += item;
+      });
+      let fourth = 0;
+      // eslint-disable-next-line no-plusplus
+      for (let j = 0; j < finaltext.length; j++) {
+        const letter = finaltext[j];
+        const indices = [];
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < finaltext.length; i++) {
+          if (finaltext[i] === letter) {
+            indices.push(finaltext[i]);
+          }
+        }
+        if (indices.length > fourth) {
+          this.analyze.fourth = letter;
+          fourth = indices.length;
         }
       }
     },

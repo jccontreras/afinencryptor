@@ -4,7 +4,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Table Spanish Alphabet Afin</h5>
+          <h5 class="modal-title" id="staticBackdropLabel">Afin's Spanish Alphabet Table</h5>
         </div>
         <div class="modal-body">
           <img src="@/assets/tablealphabet.png" style="max-width: 100%; max-height: 100%">
