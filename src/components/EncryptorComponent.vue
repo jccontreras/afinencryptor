@@ -1,60 +1,88 @@
 <template>
-  <div class="card">
-    <form @submit.prevent="runAfin">
-      <div class="card-body">
-        <h5 class="card-title">Encryptor Afin</h5>
-        <h6 class="card-subtitle mb-2 text-muted">please enter the following data</h6>
-        <h6 class="card-subtitle mb-2 text-muted">remember that the variable 'n' is equal to 27</h6>
-        <div class="container">
-          <div class="row">
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="dataa">a</span>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <form @submit.prevent="runAfin">
+            <div class="card-body">
+              <h5 class="card-title">Encryptor Afin</h5>
+              <h6 class="card-subtitle mb-2 text-muted">please enter the following data</h6>
+              <h6 class="card-subtitle mb-2 text-muted">
+                remember that the variable 'n' is equal to 27</h6>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="dataa">a</span>
+                      </div>
+                      <input type="number" class="form-control" placeholder="Ex: 10"
+                             min="1" max="27" title="no greater than 27"
+                             v-model="encryp.a" required>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="datab">b</span>
+                      </div>
+                      <input type="number" class="form-control" placeholder="Ex: 10"
+                             min="1" max="27" title="no greater than 27"
+                             v-model="encryp.b" required>
+                    </div>
+                  </div>
                 </div>
-                <input type="number" class="form-control" placeholder="Ex: 10"
-                       min="1" max="27" title="no greater than 27" v-model="encryp.a" required>
+                <div class="row">
+                  <div class="col">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Text</span>
+                      </div>
+                      <textarea class="form-control" aria-label="Text" v-model="encryp.text"
+                                placeholder="text to encrypt or decrypt" required/>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="col">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="datab">b</span>
+            <div class="card-footer" style="border-top-style: none">
+              <div class="row">
+                <div class="col">
+                  <button type="submit" class="btn btn btn-dark"
+                          @click="loadToDo(false)">Decrypt
+                  </button>
                 </div>
-                <input type="number" class="form-control" placeholder="Ex: 10"
-                       min="1" max="27" title="no greater than 27" v-model="encryp.b" required>
+                <div class="col">
+                  <a @click="reloadForm">
+                    <img src="@/assets/reload.png" style="max-width: 30px; max-height: 30px">
+                  </a>
+                </div>
+                <div class="col">
+                  <button type="submit" class="btn btn-success"
+                          @click="loadToDo(true)">Encrypt
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Text</span>
-                </div>
-                <textarea class="form-control" aria-label="Text"
-                          v-model="encryp.text" placeholder="text to encrypt or decrypt" required/>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Text</span>
               </div>
+              <textarea class="form-control" aria-label="Text" v-model="encryp.result"
+                        placeholder="text to encrypt or decrypt" readonly/>
             </div>
           </div>
         </div>
       </div>
-      <div class="card-footer" style="border-top-style: none">
-        <div class="row">
-          <div class="col">
-            <button type="submit" class="btn btn btn-dark" @click="loadToDo(false)">Decrypt</button>
-          </div>
-          <div class="col">
-            <a @click="reloadForm">
-              <img src="@/assets/reload.png" style="max-width: 30px; max-height: 30px">
-            </a>
-          </div>
-          <div class="col">
-            <button type="submit" class="btn btn-success" @click="loadToDo(true)">Encrypt</button>
-          </div>
-        </div>
-      </div>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -66,7 +94,7 @@ export default {
   data() {
     return {
       encryp: {},
-      todo: false,
+      todo: null,
       alphabet: {},
       alphabetlist: [],
     };
@@ -74,12 +102,28 @@ export default {
   methods: {
     runAfin() {
       this.fixText();
+      if (!this.todo) {
+        this.decrypt();
+      }
+    },
+    decrypt() {
+      // eslint-disable-next-line no-plusplus
+      for (let j = 0; j < this.encryp.text.length; j++) {
+        const c = this.encryp.text.charAt(j);
+        this.alphabetlist.forEach((item) => {
+          if (c === item.letter) {
+            // eslint-disable-next-line operator-assignment
+            this.encryp.result = this.encryp.result + item.letter;
+          }
+        });
+      }
     },
     loadToDo(aux) {
       this.todo = aux;
     },
     reloadForm() {
       this.encryp = {};
+      this.encryp.result = '';
     },
     fixText() {
       let textnospace = this.encryp.text.replace(/ /g, '');
@@ -112,9 +156,11 @@ export default {
       this.encryp.text = textnospace;
       textnospace = this.encryp.text.replace(/_/g, '');
       this.encryp.text = textnospace;
+      this.encryp.text = this.encryp.text.toUpperCase();
     },
   },
   mounted() {
+    this.encryp.result = '';
     const arrayalph = constants.ALPHABET.split('/');
     arrayalph.forEach((item) => {
       const alph = item.split(':');
