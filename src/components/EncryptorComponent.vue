@@ -121,10 +121,7 @@ export default {
             let res = Number(item.value) - Number(this.encryp.b);
             res *= inv;
             res = this.exactMod(res, constants.n);
-            // eslint-disable-next-line operator-assignment
-            alert(this.findFinalLetter(res));
-            // eslint-disable-next-line operator-assignment
-            this.encryp.result = this.encryp.result + this.findFinalLetter(res);
+            this.findFinalLetter(res);
           }
         });
       }
@@ -138,19 +135,15 @@ export default {
             let res = Number(this.encryp.a) * Number(item.value);
             res += Number(this.encryp.b);
             res = Number(this.exactMod(res, constants.n));
-            alert(this.findFinalLetter(res));
-            // eslint-disable-next-line operator-assignment
-            this.encryp.result = this.encryp.result + this.findFinalLetter(Number(res));
-            // alert(c);
+            this.findFinalLetter(res);
           }
         });
       }
     },
     findFinalLetter(l) {
-      // eslint-disable-next-line consistent-return
       this.alphabetlist.forEach((item) => {
         if (l === Number(item.value)) {
-          return item.letter;
+          this.encryp.result += item.letter;
         }
       });
     },
