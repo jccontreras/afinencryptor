@@ -109,7 +109,6 @@ export default {
       textaux.forEach((item) => {
         finaltext += item;
       });
-      alert(finaltext);
       let second = 0;
       // eslint-disable-next-line no-plusplus
       for (let j = 0; j < finaltext.length; j++) {
