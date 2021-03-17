@@ -73,12 +73,39 @@ export default {
   },
   methods: {
     runAfin() {
+      this.fixText();
     },
     loadToDo(aux) {
       this.todo = aux;
     },
     reloadForm() {
       this.encryp = {};
+    },
+    fixText() {
+      let textnospace = this.encryp.text.replace(/ /g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/,/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/\./g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/;/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/:/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/\(/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/\)/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/'/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/\?/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/¿/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/!/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/¡/g, '');
+      this.encryp.text = textnospace;
     },
   },
   mounted() {
