@@ -84,7 +84,6 @@ export default {
     },
     countLetters() {
       let first = 0;
-      let second = 0;
       // eslint-disable-next-line no-plusplus
       for (let j = 0; j < this.analyze.text.length; j++) {
         const letter = this.analyze.text[j];
@@ -98,12 +97,35 @@ export default {
         if (indices.length > first) {
           this.analyze.first = letter;
           first = indices.length;
-        } else if (indices.length > second) {
+        }
+      }
+      this.secondLetter(this.analyze.text, this.analyze.first);
+      this.showresult = true;
+    },
+    secondLetter(text, aux) {
+      let finaltext = '';
+      let textaux = [];
+      textaux = text.split(aux);
+      textaux.forEach((item) => {
+        finaltext += item;
+      });
+      alert(finaltext);
+      let second = 0;
+      // eslint-disable-next-line no-plusplus
+      for (let j = 0; j < finaltext.length; j++) {
+        const letter = this.analyze.text[j];
+        const indices = [];
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < finaltext.length; i++) {
+          if (this.analyze.text[i] === letter) {
+            indices.push(this.analyze.text[i]);
+          }
+        }
+        if (indices.length > second) {
           this.analyze.second = letter;
           second = indices.length;
         }
       }
-      this.showresult = true;
     },
     fixText() {
       let textnospace = this.analyze.text.replace(/ /g, '');
