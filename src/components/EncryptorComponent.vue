@@ -39,7 +39,9 @@
                         <span class="input-group-text">Text</span>
                       </div>
                       <textarea class="form-control" aria-label="Text" v-model="encryp.text"
-                                placeholder="text to encrypt or decrypt" required/>
+                                placeholder="text to encrypt or decrypt,
+                                accepted characters: , . ; : ( ) / ¿? !¡
+                                - _ { } [ ] $ % =" required/>
                     </div>
                   </div>
                 </div>
@@ -62,6 +64,11 @@
                           @click="loadToDo(true)">Encrypt
                   </button>
                 </div>
+              </div>
+            </div>
+            <div class="bg-light text-center text-lg-start">
+              <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                2021 Made by Rägnarök
               </div>
             </div>
           </form>
@@ -227,6 +234,22 @@ export default {
       this.encryp.text = textnospace;
       textnospace = this.encryp.text.replace(/\n/g, '');
       this.encryp.text = textnospace;
+      textnospace = this.analyze.text.replace(/"/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/\$/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/%/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/\{/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/}/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/\[/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/]/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/=/g, '');
+      this.analyze.text = textnospace;
       this.encryp.text = this.encryp.text.toUpperCase();
     },
   },

@@ -13,7 +13,8 @@
                   <span class="input-group-text">Text to Analyze</span>
                 </div>
                 <textarea class="form-control" aria-label="Text" v-model="analyze.text"
-                          placeholder="Text to Analyze" required/>
+                          placeholder="Text to Analyze,
+                          accepted characters: , . ; : ( ) / ¿? !¡ - _ { } [ ] $ % =" required/>
               </div>
             </div>
             <div class="card-footer" style="border-top-style: none">
@@ -27,6 +28,11 @@
                     <img src="@/assets/reload.png" style="max-width: 30px; max-height: 30px">
                   </a>
                 </div>
+              </div>
+            </div>
+            <div class="bg-light text-center text-lg-start">
+              <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                2021 Made by Rägnarök
               </div>
             </div>
           </form>
@@ -228,6 +234,22 @@ export default {
       textnospace = this.analyze.text.replace(/_/g, '');
       this.analyze.text = textnospace;
       textnospace = this.analyze.text.replace(/\n/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/"/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/\$/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/%/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/\{/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/}/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/\[/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/]/g, '');
+      this.analyze.text = textnospace;
+      textnospace = this.analyze.text.replace(/=/g, '');
       this.analyze.text = textnospace;
       this.analyze.text = this.analyze.text.toUpperCase();
     },

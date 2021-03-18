@@ -1,8 +1,10 @@
 <template>
   <div id="app" class="container-fliud">
     <div id="nav">
-      <router-link to="/">Analyzer</router-link> |
-      <router-link to="/encryptor">Encryptor</router-link> |
+      <router-link to="/">Analyzer</router-link>
+      |
+      <router-link to="/encryptor">Encryptor</router-link>
+      |
       <a @click="openModal" title="Afin's Spanish Alphabet Table">
         <img src="@/assets/info.png" style="max-width: 20px; max-height: 20px">
       </a>
