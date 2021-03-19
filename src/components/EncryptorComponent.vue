@@ -17,7 +17,7 @@
                         <span class="input-group-text" id="dataa">a</span>
                       </div>
                       <input type="number" class="form-control" placeholder="Ex: 10"
-                             min="1" max="27" title="no greater than 27"
+                             min=0 max="27" title="no greater than 27"
                              v-model="encryp.a" required>
                     </div>
                   </div>
@@ -27,7 +27,7 @@
                         <span class="input-group-text" id="datab">b</span>
                       </div>
                       <input type="number" class="form-control" placeholder="Ex: 10"
-                             min="1" max="27" title="no greater than 27"
+                             min="0" max="27" title="no greater than 27"
                              v-model="encryp.b" required>
                     </div>
                   </div>
@@ -234,22 +234,22 @@ export default {
       this.encryp.text = textnospace;
       textnospace = this.encryp.text.replace(/\n/g, '');
       this.encryp.text = textnospace;
-      textnospace = this.analyze.text.replace(/"/g, '');
-      this.analyze.text = textnospace;
-      textnospace = this.analyze.text.replace(/\$/g, '');
-      this.analyze.text = textnospace;
-      textnospace = this.analyze.text.replace(/%/g, '');
-      this.analyze.text = textnospace;
-      textnospace = this.analyze.text.replace(/\{/g, '');
-      this.analyze.text = textnospace;
-      textnospace = this.analyze.text.replace(/}/g, '');
-      this.analyze.text = textnospace;
-      textnospace = this.analyze.text.replace(/\[/g, '');
-      this.analyze.text = textnospace;
-      textnospace = this.analyze.text.replace(/]/g, '');
-      this.analyze.text = textnospace;
-      textnospace = this.analyze.text.replace(/=/g, '');
-      this.analyze.text = textnospace;
+      textnospace = this.encryp.text.replace(/"/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/\$/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/%/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/\{/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/}/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/\[/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/]/g, '');
+      this.encryp.text = textnospace;
+      textnospace = this.encryp.text.replace(/=/g, '');
+      this.encryp.text = textnospace;
       this.encryp.text = this.encryp.text.toUpperCase();
     },
   },
